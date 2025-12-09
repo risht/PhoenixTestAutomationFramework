@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ "master" ]
 
+    # 🛑 FIX: ADD THIS PERMISSIONS BLOCK 🛑
+permissions:
+  contents: read # Default for checkout action
+  security-events: write # <-- THIS GRANTS PERMISSION FOR DEPENDENCY SUBMISSION
+
 jobs:
   test:
 
@@ -20,8 +25,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Executing Test Automation Framework
-      run: mvn clean test -DsuiteXmlFile=testng.xml -Denv=qa 
-
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-    - name: Update dependency graph
-      uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+      run: mvn clean test -DsuiteXmlFile=testng.xml -Denv=qa
