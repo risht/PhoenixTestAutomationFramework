@@ -1,0 +1,40 @@
+[33mcommit 5dba03d7bad06f6389de7c47203b4f6672e6163d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Rishabh <rishabhgrover12@outlook.com>
+Date:   Fri Jan 2 11:32:34 2026 +0530
+
+    Created the TestNG.xml for Inwarranty Flow Execution.
+    
+    POM.xml: Updated and added surefire plugin to take testng.xml from the
+    terminal
+
+[33mcommit 99c70b06a977be3cf342ee5d81ae9ac9b7717a08[m
+Author: Rishabh <rishabhgrover12@outlook.com>
+Date:   Fri Jan 2 11:10:18 2026 +0530
+
+    Requirement 3:
+    
+    Created AuthToken Provider-Manage the Token for different roles.
+    
+    Roles: Hold all the user roles for Phoenix Application
+    
+    UserDetailsAPITest: Functional API Test Checks and Response Time
+    
+    CountAPITest: Functional API Test Checks and Response Time for Count
+    API.Also does token testing for negative scenario
+    
+    MasterAPITest: Functional API Test Checks and Response Time for Master API.Also does token testing for negative scenario
+
+[33mcommit 8e12dd6744ff9311cb56c6a22cbbdc0f7d7c3245[m
+Author: Rishabh <rishabhgrover12@outlook.com>
+Date:   Mon Dec 29 13:05:28 2025 +0530
+
+    Created Config Manager Class for managing the multiple enviornments
+    (dev,qa,uat) for the project
+    
+    Updated pom.xml-Updated maven compiler source and target to 14.
+
+[33mcommit 72dc20df60769d0636bbd4ae3c77a37a2feb63fa[m
+Author: Rishabh <rishabhgrover12@outlook.com>
+Date:   Sun Dec 28 13:56:30 2025 +0530
+
+    Base Code for my Automation Framework

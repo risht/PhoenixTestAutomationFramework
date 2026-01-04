@@ -5,6 +5,8 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import org.testng.annotations.Test;
 
+import com.api.utils.SpecUtils;
+
 import io.restassured.module.jsv.JsonSchemaValidator;
 
 import static com.api.constant.Roles.*;
@@ -17,18 +19,11 @@ public class MasterAPITest {
 	public void masterAPITest() {
 		
 		given()
-		.baseUri(getProperty("BASE_URI"))
-		.and()
-		.header("Authorization",getToken(FD))
-		.and()
-		.contentType("")
-		.log().all()	
+		.spec(SpecUtils.requestSpecWithAuth(FD))
 		.when()
 		.post("master")
 		.then()
-		.log().all()
-		.statusCode(200)
-		.time(lessThan(2000L))
+		.spec(SpecUtils.responseSpec_OK())
 		.body("message", equalTo("Success"))
 		.body("data", notNullValue())
 		.body("data", hasKey("mst_oem"))
@@ -46,17 +41,13 @@ public class MasterAPITest {
 			public void InvaidTokenMasterAPITest() {
 				
 				 given()
-				.baseUri(getProperty("BASE_URI"))
-				.and()
-				.header("Authorization","")
-				.and()
-				.contentType("")
+				 .spec(SpecUtils.requestSpec())
 				.log().all()	
 				.when()
 				.post("master")
 				.then()
 				.log().all()
-				.statusCode(401);	
+				.spec(SpecUtils.responseSpec_TEXT(401));	
 				
 			}
 }
