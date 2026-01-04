@@ -16,25 +16,24 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.*;
 import org.testng.annotations.Test;
 
+import com.api.utils.SpecUtils;
+
+import groovyjarjarpicocli.CommandLine.Spec;
+
 public class CountAPITest {
 	
 	@Test
 	public void verifyCountAPIResponse()
 	{
 		given()
-		.baseUri(getProperty("BASE_URI"))
-		.and()
-		.header("Authorization",getToken(FD))
-		.log().uri()
-		.log().method()
-		.log().headers()
+		.spec(SpecUtils.requestSpecWithAuth(FD))
 		.when()
 		.get("dashboard/count")
 		.then()
-		.log().all()
-		.statusCode(200)
+		.spec(SpecUtils.responseSpec_OK())
+		
 		.body("message", equalTo("Success"))
-		.time(lessThan(1600L))
+		
 		
 		.body("data", notNullValue())
 		
@@ -54,17 +53,11 @@ public class CountAPITest {
 		public void countAPITest_MissingAuthToken() 
 		{
 			 given()
-			.baseUri(getProperty("BASE_URI"))
-			.and()
-			.log().uri()
-			.log().method()
-			.log().headers()
+			 .spec(SpecUtils.requestSpec())
 			.when()
 			.get("dashboard/count")
 			.then()
-			.log().all()
-			.statusCode(401);
-			
+			.spec(SpecUtils.responseSpec_TEXT(401));			
 			
 		}
 	
