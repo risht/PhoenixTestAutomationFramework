@@ -5,7 +5,7 @@ import static com.api.utils.ConfigManager.getProperty;
 import org.hamcrest.Matchers;
 
 import com.api.constant.Roles;
-import com.api.pojo.UserCredentials;
+import com.api.request.models.UserCredentials;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -68,6 +68,27 @@ public static RequestSpecification requestSpec(Object payload) {
 	}
 
 
+	public static RequestSpecification requestSpecWithAuth(Roles role,Object payload)
+	{
+
+		RequestSpecification requestSpecification=new RequestSpecBuilder()
+		.setBaseUri(getProperty("BASE_URI"))
+		.setContentType(ContentType.JSON)
+		.setAccept(ContentType.JSON)
+		.addHeader("Authorization", AuthTokenProvider.getToken(role))
+		.setBody(payload)
+		.log(LogDetail.URI)
+		.log(LogDetail.METHOD)
+		.log(LogDetail.BODY)
+		.build();
+		return requestSpecification;
+		
+	}
+
+	
+	
+	
+	
 	public static ResponseSpecification responseSpec_OK() {
 		ResponseSpecification responseSpecification= new ResponseSpecBuilder()
 		.expectContentType(ContentType.JSON)
