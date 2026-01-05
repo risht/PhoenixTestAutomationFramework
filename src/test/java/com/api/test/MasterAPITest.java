@@ -1,29 +1,30 @@
 package com.api.test;
 
+import static com.api.constant.Roles.FD;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.notNullValue;
 
-import static org.hamcrest.Matchers.*;
 import org.testng.annotations.Test;
 
-import com.api.utils.SpecUtils;
+import static com.api.utils.SpecUtils.*;
 
-import io.restassured.module.jsv.JsonSchemaValidator;
-
-import static com.api.constant.Roles.*;
-import static com.api.utils.AuthTokenProvider.*;
-import static com.api.utils.ConfigManager.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.*;
 
 public class MasterAPITest {
 
-	@Test 
+	@Test(description="Verify if the Master API is giving correct response", groups= {"api","smoke","regression"}) 
 	public void masterAPITest() {
 		
 		given()
-		.spec(SpecUtils.requestSpecWithAuth(FD))
+		.spec(requestSpecWithAuth(FD))
 		.when()
 		.post("master")
 		.then()
-		.spec(SpecUtils.responseSpec_OK())
+		.spec(responseSpec_OK())
 		.body("message", equalTo("Success"))
 		.body("data", notNullValue())
 		.body("data", hasKey("mst_oem"))
@@ -34,20 +35,20 @@ public class MasterAPITest {
 		.body("data.mst_model.size()", greaterThan(0))
 		.body("data.mst_oem.id", everyItem(notNullValue()))
 		.body("data.mst_oem.name", everyItem(notNullValue()))
-		.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("response-schema/MasterAPIResponseSchem.json"));
+		.body(matchesJsonSchemaInClasspath("response-schema/MasterAPIResponseSchem.json"));
 
 	}
-			@Test
+			@Test(description="Verify if the Master API is giving correct status code for invalid token", groups= {"api","negative","regression"}) 
 			public void InvaidTokenMasterAPITest() {
 				
 				 given()
-				 .spec(SpecUtils.requestSpec())
+				 .spec(requestSpec())
 				.log().all()	
 				.when()
 				.post("master")
 				.then()
 				.log().all()
-				.spec(SpecUtils.responseSpec_TEXT(401));	
+				.spec(responseSpec_TEXT(401));	
 				
 			}
 }
