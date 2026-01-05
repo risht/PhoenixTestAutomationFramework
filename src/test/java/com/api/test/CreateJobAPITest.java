@@ -9,7 +9,14 @@ import java.util.List;
 
 import org.testng.annotations.Test;
 
+import com.api.constant.Model;
+import com.api.constant.OEM;
+import com.api.constant.Platform;
+import com.api.constant.Problem;
+import com.api.constant.Product;
 import com.api.constant.Roles;
+import com.api.constant.ServiceLocation;
+import com.api.constant.Warranty_Status;
 import com.api.request.models.CreateJobPayload;
 import com.api.request.models.Customer;
 import com.api.request.models.CustomerAddress;
@@ -32,15 +39,17 @@ public class CreateJobAPITest {
 		
 		CustomerAddress customerAddress = new CustomerAddress("D 404", "Vasant", "GK-2", "Inorbit", "Delhi", "110015", "India", "Delhi");
 		
-		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "30347707147876", "30347707147876", "30347707147876", getTimeWithDaysAgo(10), "1", "1");
+		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "45247707147876", "45247707147876", "45247707147876", getTimeWithDaysAgo(10), 
+				
+		Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
 		
-		Problems problems = new Problems("1","Battery Issue");
+		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(),"Battery Issues");
 		
 		List<Problems> problemsList = new ArrayList<Problems>();
 		
 		problemsList .add(problems);
 		
-		CreateJobPayload createJobPayload = new CreateJobPayload(0, 2, 1, 1, customer , customerAddress, customerProduct, problemsList);
+		CreateJobPayload createJobPayload = new CreateJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warranty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(), customer , customerAddress, customerProduct, problemsList);
 			
 		
 		given()
