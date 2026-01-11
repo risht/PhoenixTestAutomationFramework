@@ -1,20 +1,15 @@
 package com.demo.csv;
 
-public class UserPojo {
+public class UserBean {
 
 	private String username;
 	private String password;
 
-	public UserPojo() {
-		
+	public UserBean() {
+		//	Non Parameterized Constructor
 	}
 	
-	public UserPojo(String username, String password) {
-		super();
-		this.username = username;
-		this.password = password;
-	}
-
+	
 	public String getUsername() {
 		return username;
 	}
@@ -33,7 +28,7 @@ public class UserPojo {
 
 	@Override
 	public String toString() {
-		return "UserPojo [username=" + username + ", password=" + password + "]";
+		return "UserBean [username=" + username + ", password=" + password + "]";
 	}
 
 }
