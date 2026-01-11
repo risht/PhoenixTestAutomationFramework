@@ -27,7 +27,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
     - name: Set up JDK 17
       uses: actions/setup-java@v4
@@ -36,15 +37,19 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Execute Test Automation Framework
-      # Fixed: Combined into a single line to avoid "Unknown lifecycle phase" errors
-      run: mvn clean test -DsuiteXmlFile="${{ github.event.inputs.suiteXmlFile || 'testng.xml' }}" -Denv="${{ github.event.inputs.env || 'qa' }}"
+    - name: Default Values for Execution
+      id: default
+      run: |
+        echo "suiteXmlFile=${{ github.event.inputs.suiteXmlFile || 'testng.xml' }}" >> $GITHUB_OUTPUT
+        echo "env=${{ github.event.inputs.env || 'qa' }}" >> $GITHUB_OUTPUT
 
-    - name: Upload a Build Artifact
+    - name: Execute Test Automation Framework
+      run: mvn clean test -DsuiteXmlFile="${{ steps.default.outputs.suiteXmlFile }}" -Denv="${{ steps.default.outputs.env }}"
+
+    - name: Upload Surefire Report
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: Surefire Report
+        name: Surefire Report - ${{ steps.default.outputs.env }} - ${{ steps.default.outputs.suiteXmlFile }}
         path: target/surefire-reports/
         retention-days: 10
-  
