@@ -1,8 +1,9 @@
 package com.dataproviders.api.bean;
 
 public class UserBean {
-
+	
 	private String username;
+	
 	private String password;
 
 	public UserBean() {
