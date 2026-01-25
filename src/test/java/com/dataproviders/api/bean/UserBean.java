@@ -1,9 +1,16 @@
 package com.dataproviders.api.bean;
 
+import com.opencsv.bean.CsvBindByName;
+import com.poiji.annotation.ExcelCellName;
+
 public class UserBean {
 	
+	@ExcelCellName("username")
+	@CsvBindByName(column="username")
 	private String username;
 	
+	@ExcelCellName("password")
+	@CsvBindByName(column="passowrd")
 	private String password;
 
 	public UserBean() {
