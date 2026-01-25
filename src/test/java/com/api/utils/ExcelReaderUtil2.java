@@ -8,8 +8,6 @@ import java.util.List;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.api.request.models.UserCredentials;
-import com.dataproviders.api.bean.UserBean;
 import com.poiji.bind.Poiji;
 
 public class ExcelReaderUtil2 {
@@ -18,12 +16,12 @@ public class ExcelReaderUtil2 {
 		
 	}
 	
-	public static <T> Iterator<T> loadTestData(String sheetName, Class<T> clazz) {
+	public static <T> Iterator<T> loadTestData(String xlxsFile,String sheetName, Class<T> clazz) {
 		
 		//Apache Poi ooxml library
 		
 		InputStream is = Thread.currentThread().getContextClassLoader().
-				getResourceAsStream("TestData\\PhoenixTestData.xlsx");
+				getResourceAsStream(xlxsFile);
 		
 		XSSFWorkbook myWorkBook = null;
 		try {
@@ -37,8 +35,8 @@ public class ExcelReaderUtil2 {
 		
 		XSSFSheet mySheet = myWorkBook.getSheet(sheetName);//"LoginTestData"
 		
-		List<T>DataList=Poiji.fromExcel(mySheet, clazz);
-		return DataList.iterator();
+		List<T>list=Poiji.fromExcel(mySheet, clazz);
+		return list.iterator();
 		
 	}
 	
