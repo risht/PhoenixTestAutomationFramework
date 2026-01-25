@@ -10,9 +10,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.poiji.bind.Poiji;
 
-public class ExcelReaderUtil2 {
+public class ExcelReaderUtility2 {
 
-	private ExcelReaderUtil2() {
+	private ExcelReaderUtility2() {
 		
 	}
 	
