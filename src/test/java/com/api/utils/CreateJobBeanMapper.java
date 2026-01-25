@@ -27,9 +27,9 @@ public class CreateJobBeanMapper {
         Customer customer = new Customer(bean.getCustomer__first_name(), 
         		bean.getCustomer__last_name(), 
         		bean.getCustomer__mobile_number(), 
-        		bean.getCustomer__mobile_number_alt(), 
+        		bean.getCustomer__mobile_number_alt() == null ? "" : bean.getCustomer__mobile_number_alt(),
         		bean.getCustomer__email_id(), 
-        		bean.getCustomer__email_id_alt());
+        		bean.getCustomer__email_id_alt() == null ? "" : bean.getCustomer__email_id_alt());
         
         CustomerAddress customeraddress = new CustomerAddress(bean.getCustomer_address__flat_number(), 
         		bean.getCustomer_address__apartment_name(), 
