@@ -2,11 +2,11 @@ package com.database;
 
 import java.sql.SQLException;
 
-public class DemoRunner {
+public class DemoRunner2 {
 
 	public static void main(String[] args) throws SQLException {
 
-	DatabaseManagerOLD.createConnection();
+		DatabaseManagerOLD.createConnection();
 	
 	long startTime = System.currentTimeMillis();
 		
