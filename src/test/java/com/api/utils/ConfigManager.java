@@ -11,11 +11,17 @@ public class ConfigManager {
 	private static String path = "config/config.properties";
 	private static String env;
 	
+	private ConfigManager() {
+		
+	}
+	
 	static {	
 		
 	env = System.getProperty("env","qa");
       
     env = env.toLowerCase().trim();
+    
+    System.out.println("Running Test in env" + env);
     
 	switch(env) {
 	
