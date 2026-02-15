@@ -25,7 +25,7 @@ public class DaoDemoRunner2 {
 		CustomerProductDBModel customerProductDBModel= CustomerProductDao.getProductInfofromDB(186540);
 		System.out.println(customerProductDBModel);
 		
-		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "43247707147262", "43247707147262", "43247707147262", getTimeWithDaysAgo(10), 
+		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "43244707147262", "43247707147262", "43247707147262", getTimeWithDaysAgo(10), 
 				
 		Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
 		
