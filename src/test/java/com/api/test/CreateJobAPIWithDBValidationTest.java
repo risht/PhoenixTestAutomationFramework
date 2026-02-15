@@ -31,9 +31,12 @@ import com.api.request.models.Problems;
 import com.database.dao.CustomerAddressDao;
 import com.database.dao.CustomerDao;
 import com.database.dao.CustomerProductDao;
+import com.database.dao.MapJobProblemDao;
 import com.database.model.CustomerAddressDBModel;
 import com.database.model.CustomerDBModel;
 import com.database.model.CustomerProductDBModel;
+import com.database.model.MapJobProblemModel;
+
 
 import io.restassured.response.Response;
 
@@ -51,7 +54,7 @@ public class CreateJobAPIWithDBValidationTest {
 		
 		customerAddress	= new CustomerAddress("D 404", "Vasant", "GK-2", "Inorbit", "Delhi", "110015", "India", "Delhi");
 		
-		customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "43247707147262", "43247707147262", "43247707147262", getTimeWithDaysAgo(10), 
+		customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "43297707147262", "43947707147262", "43947707147262", getTimeWithDaysAgo(10), 
 				
 		Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
 		
@@ -118,15 +121,22 @@ public class CreateJobAPIWithDBValidationTest {
 		
 		int productId=response.then().extract().body().jsonPath().getInt("data.tr_customer_product_id");
 		
+		
+		int tr_job_head_id=response.then().extract().body().jsonPath().getInt("data.id");
+		MapJobProblemModel jobDataFromDB = MapJobProblemDao.getProblemDetails(tr_job_head_id);
+		Assert.assertEquals(jobDataFromDB.getMst_problem_id(),createJobPayload.problems().get(0).id());
+		Assert.assertEquals(jobDataFromDB.getRemark(),createJobPayload.problems().get(0).remark());
+		
+		
 		CustomerProductDBModel customerProductDBData= CustomerProductDao.getProductInfofromDB(productId);
-	
+		
 		Assert.assertEquals(customerProductDBData.getImei1(),customerProduct.imei1());
 		Assert.assertEquals(customerProductDBData.getImei2(),customerProduct.imei2());
 		Assert.assertEquals(customerProductDBData.getSerial_number(),customerProduct.serial_number());
 		Assert.assertEquals(customerProductDBData.getDop(),customerProduct.dop());
 		Assert.assertEquals(customerProductDBData.getPopurl(),customerProduct.popurl());
 		Assert.assertEquals(customerProductDBData.getMst_model_id(),customerProduct.mst_model_id());
-	
+		
 	}
 
 }
