@@ -115,6 +115,17 @@
     <scope>compile</scope>
 </dependency>
   
+  
+  <dependency>
+  <groupId>io.github.cdimascio</groupId>
+  <artifactId>dotenv-java</artifactId>
+  <version>3.2.0</version> <!-- Use the latest version -->
+</dependency>
+
+  
+  
+  
+  
   </dependencies>
   
   
