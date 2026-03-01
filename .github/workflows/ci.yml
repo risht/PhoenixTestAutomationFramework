@@ -18,7 +18,7 @@ on:
       suiteXmlFile:
         description: "TestNG Xml File"
         type: choice
-        options: [testng.xml, smoke.xml, regression.xml,testng-datadriven.xml]
+        options: [testng.xml, smoke.xml, regression.xml, testng-datadriven.xml]
         default: testng.xml
         required: true
 
@@ -42,6 +42,12 @@ jobs:
       run: |
         echo "suiteXmlFile=${{ github.event.inputs.suiteXmlFile || 'testng.xml' }}" >> $GITHUB_OUTPUT
         echo "env=${{ github.event.inputs.env || 'qa' }}" >> $GITHUB_OUTPUT
+
+    - name: Creating the .env file
+      run: |
+        echo "DB_URL=${{ secrets.DB_URL }}" >> .env
+        echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
     - name: Execute Test Automation Framework
       run: mvn clean test -DsuiteXmlFile="${{ steps.default.outputs.suiteXmlFile }}" -Denv="${{ steps.default.outputs.env }}"
