@@ -54,7 +54,7 @@ public class CreateJobAPIWithDBValidationTest {
 		
 		customerAddress	= new CustomerAddress("D 404", "Vasant", "GK-2", "Inorbit", "Delhi", "110015", "India", "Delhi");
 		
-		customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "43297707107262", "43947707107262", "43947707107262", getTimeWithDaysAgo(10), 
+		customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "43297707147262", "43947707147262", "43947707147262", getTimeWithDaysAgo(10), 
 				
 		Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
 		
