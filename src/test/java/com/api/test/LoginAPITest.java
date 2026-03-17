@@ -1,7 +1,7 @@
 package com.api.test;
 
-import static com.api.utils.ConfigManager.getProperty;
-import static io.restassured.RestAssured.given;
+import static com.api.utils.SpecUtils.responseSpec_OK;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 
 import java.io.IOException;
@@ -10,19 +10,20 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.api.request.models.UserCredentials;
-import static com.api.utils.SpecUtils.*;
+import com.api.services.AuthService;
 
-import static io.restassured.module.jsv.JsonSchemaValidator.*;
+import io.restassured.response.Response;
 
 public class LoginAPITest {
 
 	private UserCredentials userCredentials ;
 	
+	private AuthService authService;
 	
 	@BeforeMethod(description="Create the Payload for the Login API")	
 	public void setup() {
 		userCredentials = new UserCredentials("iamfd", "password");
-	
+		authService = new AuthService();
 	}
 	
 	
@@ -31,11 +32,7 @@ public class LoginAPITest {
 	public void loginAPITest() throws IOException {		
 					
 		
-		 given()
-		.baseUri(getProperty("BASE_URI"))
-		.spec(requestSpec(userCredentials))
-		.when()
-		.post("login")
+		authService.login(userCredentials)	
 		.then()
 		.spec(responseSpec_OK())
 		.body("message", equalTo("Success"))
