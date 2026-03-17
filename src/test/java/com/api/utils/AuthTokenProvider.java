@@ -1,8 +1,13 @@
 package com.api.utils;
 
+import static com.api.constant.Roles.ENG;
+import static com.api.constant.Roles.FD;
+import static com.api.constant.Roles.QC;
+import static com.api.constant.Roles.SUP;
 import static io.restassured.RestAssured.given;
 
-import static com.api.constant.Roles.*;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.api.constant.Roles;
 import com.api.request.models.UserCredentials;
@@ -12,11 +17,20 @@ import io.restassured.http.ContentType;
 public class AuthTokenProvider {
 	
 	
+private static Map<Roles, String> tokenCache = new ConcurrentHashMap<Roles,String>();	
+	
 private AuthTokenProvider(){
 	
 }
 	
 	public static String getToken(Roles roles){
+		
+		
+		if(tokenCache.containsKey(roles))
+		{
+			return tokenCache.get(roles);
+		}
+		
 		
 		UserCredentials userCredentials = null;
 		
@@ -57,6 +71,8 @@ private AuthTokenProvider(){
 		
 		//System.out.println(token);
 		
+		
+		tokenCache.put(roles, token);
 		return token;
 	}
 
