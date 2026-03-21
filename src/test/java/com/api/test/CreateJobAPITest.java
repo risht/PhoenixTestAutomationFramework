@@ -1,9 +1,7 @@
 package com.api.test;
 
 import static com.api.utils.DateTimeUtil.getTimeWithDaysAgo;
-import static com.api.utils.SpecUtils.requestSpecWithAuth;
 import static com.api.utils.SpecUtils.responseSpec_OK;
-import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
@@ -27,20 +25,27 @@ import com.api.request.models.Customer;
 import com.api.request.models.CustomerAddress;
 import com.api.request.models.CustomerProduct;
 import com.api.request.models.Problems;
+import com.api.services.JobService;
 
 public class CreateJobAPITest {
+	
+	
+	
+	private JobService jobservice;	
+	
+	
 	
 	private CreateJobPayload createJobPayload; 
 	
 	
-	@BeforeMethod(description="Creating createjob api request payload")
+	@BeforeMethod(description="Creating createjob api request payload and instantiating the Job Service")
 	public void setUp() {
 		
 		Customer customer = new Customer("Rishabh", "Grover", "7098345321", "", "rishabhgrover@gmail.com", "");
 		
 		CustomerAddress customerAddress = new CustomerAddress("D 404", "Vasant", "GK-2", "Inorbit", "Delhi", "110015", "India", "Delhi");
 		
-		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "45147707147372", "45147707147372", "45147707147372", getTimeWithDaysAgo(10), 
+		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "26547707147372", "26547707147372", "26547707147372", getTimeWithDaysAgo(10), 
 				
 		Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
 		
@@ -52,7 +57,7 @@ public class CreateJobAPITest {
 		
 		createJobPayload = new CreateJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warranty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(), customer , customerAddress, customerProduct, problemsList);
 			
-		
+		jobservice = new JobService();
 	}
 	
 	
@@ -64,10 +69,7 @@ public class CreateJobAPITest {
 		
 		
 		
-		given()
-		.spec(requestSpecWithAuth(Roles.FD, createJobPayload))
-		.when()
-		.post("/job/create")
+		jobservice.createJob(Roles.FD, createJobPayload)
 		.then()
 		.spec(responseSpec_OK())
 		.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))

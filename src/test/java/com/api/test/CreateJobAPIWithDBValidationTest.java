@@ -28,6 +28,7 @@ import com.api.request.models.Customer;
 import com.api.request.models.CustomerAddress;
 import com.api.request.models.CustomerProduct;
 import com.api.request.models.Problems;
+import com.api.services.JobService;
 import com.database.dao.CustomerAddressDao;
 import com.database.dao.CustomerDao;
 import com.database.dao.CustomerProductDao;
@@ -37,7 +38,6 @@ import com.database.model.CustomerDBModel;
 import com.database.model.CustomerProductDBModel;
 import com.database.model.MapJobProblemModel;
 
-
 import io.restassured.response.Response;
 
 public class CreateJobAPIWithDBValidationTest {
@@ -46,15 +46,16 @@ public class CreateJobAPIWithDBValidationTest {
 	private Customer customer; 
 	private CustomerAddress customerAddress;
 	private CustomerProduct customerProduct;
+	private JobService jobservice;
 	
-	@BeforeMethod(description="Creating createjob api request payload")
+	@BeforeMethod(description="Creating createjob api request payload and instantiating the JobService")
 	public void setUp() {
 		
 		customer = new Customer("Rishabh", "Grover", "7098345321", "", "rishabhgrover@gmail.com", "");
 		
 		customerAddress	= new CustomerAddress("D 404", "Vasant", "GK-2", "Inorbit", "Delhi", "110015", "India", "Delhi");
 		
-		customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "43297707147262", "43947707147262", "43947707147262", getTimeWithDaysAgo(10), 
+		customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "25797707147262", "25747707147262", "25747707147262", getTimeWithDaysAgo(10), 
 				
 		Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
 		
@@ -66,7 +67,7 @@ public class CreateJobAPIWithDBValidationTest {
 		
 		createJobPayload = new CreateJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warranty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(), customer , customerAddress, customerProduct, problemsList);
 			
-		
+		jobservice= new JobService();
 	}
 	
 	
@@ -76,10 +77,7 @@ public class CreateJobAPIWithDBValidationTest {
 	@Test(description="Verify if the Create Job API is able to create Inwarranty Job", groups= {"api","smoke","regression"}) 
 	public void createJobAPITest() {
 		
-		Response response=given()
-		.spec(requestSpecWithAuth(Roles.FD, createJobPayload))
-		.when()
-		.post("/job/create")
+		Response response=jobservice.createJob(Roles.FD, createJobPayload)
 		.then()
 		.spec(responseSpec_OK())
 		.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))

@@ -22,6 +22,7 @@ import com.api.request.models.Customer;
 import com.api.request.models.CustomerAddress;
 import com.api.request.models.CustomerProduct;
 import com.api.request.models.Problems;
+import com.api.services.JobService;
 import com.api.utils.DateTimeUtil;
 import com.api.utils.FakerDataGenerator;
 import com.database.dao.CustomerAddressDao;
@@ -36,12 +37,14 @@ public class CreateJobAPITestwithFakeData {
 	
 	private static final String COUNTRY="India";
 	
-	@BeforeMethod(description="Creating createjob api request payload")
+	private JobService jobservice;	
+	
+	@BeforeMethod(description="Creating createjob api request payload and instantiating the JobService")
 	public void setUp() {
 		
 		
 		createJobPayload = FakerDataGenerator.generateFakeCreateJobData();
-		
+		jobservice = new JobService();
 	}
 	
 	
@@ -53,10 +56,7 @@ public class CreateJobAPITestwithFakeData {
 		
 		
 		
-		int customerId=given()
-		.spec(requestSpecWithAuth(Roles.FD, createJobPayload))
-		.when()
-		.post("/job/create")
+		int customerId=jobservice.createJob(Roles.FD, createJobPayload)
 		.then()
 		.spec(responseSpec_OK())
 		.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))
