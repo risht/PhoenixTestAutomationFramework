@@ -6,12 +6,26 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.api.constant.Roles;
 import com.api.request.models.CreateJobPayload;
+import com.api.services.JobService;
 
 public class CreateJobAPIDBDataDrivenTest { 
+	
+	
+	private JobService jobservice;	
+	
+	
+	@BeforeMethod(description="Instantiating the Job Service")
+	public void setUp() {
+		
+		
+		jobservice = new JobService();
+	}
+	
 	
 	@Test(description="Verify if the Create Job API is able to create Inwarranty Job", groups= {"api","regression","datadriven"},
 			dataProviderClass=com.dataproviders.DataProviderUtils.class,
@@ -21,10 +35,7 @@ public class CreateJobAPIDBDataDrivenTest {
 	public void createJobAPITest(CreateJobPayload createJobPayload) {
 		
 		
-		given()
-		.spec(requestSpecWithAuth(Roles.FD, createJobPayload))
-		.when()
-		.post("/job/create")
+		jobservice.createJob(Roles.FD, createJobPayload)
 		.then()
 		.spec(responseSpec_OK())
 		.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))
