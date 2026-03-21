@@ -1,6 +1,8 @@
 package com.api.test;
 
-import static com.api.constant.Roles.FD;
+import static com.api.utils.SpecUtils.requestSpec;
+import static com.api.utils.SpecUtils.responseSpec_OK;
+import static com.api.utils.SpecUtils.responseSpec_TEXT;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.blankOrNullString;
@@ -11,19 +13,30 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.api.utils.SpecUtils.*;
+import com.api.services.DashBoardService;
 
+import static com.api.constant.Roles.FD;
 public class CountAPITest {
+	
+	
+	private  DashBoardService dashboardService;
+	
+	@BeforeMethod(description="Setting up the DashBoardService instance")
+	public void setup() {
+		dashboardService = new DashBoardService();
+	}
+	
+	
+	
+	
 	
 	@Test(description="Verify if the Count API is giving correct response", groups= {"api","smoke","regression"}) 
 	public void verifyCountAPIResponse()
 	{
-		given()
-		.spec(requestSpecWithAuth(FD))
-		.when()
-		.get("dashboard/count")
+		dashboardService.count(FD)
 		.then()
 		.spec(responseSpec_OK())
 		
@@ -47,10 +60,7 @@ public class CountAPITest {
 		@Test(description="Verify if the Count API is giving correct status code for invalid token", groups= {"api","negative","regression"}) 
 		public void countAPITest_MissingAuthToken() 
 		{
-			 given()
-			 .spec(requestSpec())
-			.when()
-			.get("dashboard/count")
+			dashboardService.countWithNoAuthToken()
 			.then()
 			.spec(responseSpec_TEXT(401));			
 			

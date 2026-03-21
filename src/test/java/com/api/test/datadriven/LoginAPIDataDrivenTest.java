@@ -1,17 +1,24 @@
 package com.api.test.datadriven;
 
-import static com.api.utils.ConfigManager.getProperty;
-import static com.api.utils.SpecUtils.requestSpec;
 import static com.api.utils.SpecUtils.responseSpec_OK;
-import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.api.services.AuthService;
 import com.dataproviders.api.bean.UserBean;
 
 public class LoginAPIDataDrivenTest {
+	
+	private AuthService authservice;
+	
+	@BeforeMethod(description= "Initializing the Auth Service")
+	
+	public void setup() {
+		authservice	 = new AuthService();
+	}
 	
 	@Test(description="Verifying if login api is working for FD user",
 			groups = {"api","regression","datadriven"},
@@ -21,11 +28,7 @@ public class LoginAPIDataDrivenTest {
 	public void loginAPITest(UserBean userbean)  {		
 					
 		
-		 given()
-		.baseUri(getProperty("BASE_URI"))
-		.spec(requestSpec(userbean))
-		.when()
-		.post("login")
+		authservice.login(userbean)
 		.then()
 		.spec(responseSpec_OK())
 		.body("message", equalTo("Success"))
