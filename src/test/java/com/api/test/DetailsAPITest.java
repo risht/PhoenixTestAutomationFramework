@@ -1,0 +1,34 @@
+package com.api.test;
+
+import static org.hamcrest.Matchers.*;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import static com.api.constant.Roles.*;
+import com.api.request.models.Details;
+import com.api.services.DashBoardService;
+import static com.api.utils.SpecUtils.*;
+
+public class DetailsAPITest {
+
+	private DashBoardService dashboardService;
+	private Details detailspayload;
+	
+	
+	@BeforeMethod(description = "Instantiating the Dashboard service and creating detail payload")
+	
+	public void setup() {
+		
+		dashboardService= new DashBoardService();
+		detailspayload = new Details("created_today");
+	}
+
+	@Test(description ="Verify if Details API is working properly",groups = {"api","smoke","e2e"})
+	public void detailAPITest() {
+		
+		dashboardService.details(FD, detailspayload)
+		.then()
+		.spec(responseSpec_OK())
+		.body("message", equalTo("Success"));
+	}
+}
