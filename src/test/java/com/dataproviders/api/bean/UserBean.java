@@ -10,13 +10,18 @@ public class UserBean {
 	private String username;
 	
 	@ExcelCellName("password")
-	@CsvBindByName(column="passowrd")
+	@CsvBindByName(column="password")
 	private String password;
 
 	public UserBean() {
 		//	Non Parameterized Constructor
 	}
 	
+	public UserBean(String username,String password)
+	{
+		this.username=username;
+		this.password=password;
+	}
 	
 	public String getUsername() {
 		return username;

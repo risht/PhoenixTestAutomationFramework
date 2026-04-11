@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.api.request.models.UserCredentials;
+import com.dataproviders.api.bean.UserBean;
 
 import io.restassured.response.Response;
 
@@ -21,7 +22,7 @@ public class AuthService {
 	public Response login(Object userCredentials) {
 		
 		
-		  LOGGER.info("Making loging request for the payload {} ",((UserCredentials)userCredentials).username());
+		  LOGGER.info("Making loging request for the payload {} ",((UserBean)userCredentials).getUsername());
 		 	Response response= given()
 			.baseUri(getProperty("BASE_URI"))
 			.spec(requestSpec(userCredentials))
