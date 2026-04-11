@@ -45,7 +45,7 @@ public class CreateJobAPITest {
 		
 		CustomerAddress customerAddress = new CustomerAddress("D 404", "Vasant", "GK-2", "Inorbit", "Delhi", "110015", "India", "Delhi");
 		
-		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "26547707147372", "26547707147372", "26547707147372", getTimeWithDaysAgo(10), 
+		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "26547707127372", "26547707127372", "26547707127372", getTimeWithDaysAgo(10), 
 				
 		Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
 		
