@@ -10,7 +10,7 @@ import org.testng.ITestResult;
 
 public class APITestListners implements ITestListener{
 	
-	private static final Logger LOGGER = LogManager.getLogger(APITestListner.class);
+	private static final Logger LOGGER = LogManager.getLogger(APITestListners.class);
 	
 	public void onTestStart(ITestResult result)
 	{
