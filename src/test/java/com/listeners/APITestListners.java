@@ -8,7 +8,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-public class APITestListner implements ITestListener{
+public class APITestListners implements ITestListener{
 	
 	private static final Logger LOGGER = LogManager.getLogger(APITestListner.class);
 	
