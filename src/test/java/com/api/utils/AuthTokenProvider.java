@@ -9,8 +9,12 @@ import static io.restassured.RestAssured.given;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.api.constant.Roles;
 import com.api.request.models.UserCredentials;
+import com.api.services.AuthService;
 
 import io.restassured.http.ContentType;
 
@@ -18,19 +22,22 @@ public class AuthTokenProvider {
 	
 	
 private static Map<Roles, String> tokenCache = new ConcurrentHashMap<Roles,String>();	
-	
+
+private static final Logger LOGGER = LogManager.getLogger(AuthTokenProvider.class);  
+
 private AuthTokenProvider(){
 	
 }
 	
 	public static String getToken(Roles roles){
 		
-		
+		LOGGER.info("Checking if the token for {} is present in the cache ",roles);
 		if(tokenCache.containsKey(roles))
 		{
+			LOGGER.info("token found for {} ",roles);
 			return tokenCache.get(roles);
 		}
-		
+		LOGGER.info("token not found making the logging request for {} ", roles);
 		
 		UserCredentials userCredentials = null;
 		
@@ -71,6 +78,7 @@ private AuthTokenProvider(){
 		
 		//System.out.println(token);
 		
+		LOGGER.info("token chache for future request");
 		
 		tokenCache.put(roles, token);
 		return token;

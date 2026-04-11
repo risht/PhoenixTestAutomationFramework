@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 import com.api.request.models.UserCredentials;
 import com.api.services.AuthService;
+import com.dataproviders.api.bean.UserBean;
 
 public class LoginAPIJSONDataDrivenTest {
 	
@@ -33,7 +34,7 @@ private AuthService authService;
 			dataProviderClass=com.dataproviders.DataProviderUtils.class,
 			dataProvider="LoginAPIJsonDataProvider")
 	
-	public void loginAPITest(UserCredentials userCredentails)  {		
+	public void loginAPITest(UserBean userCredentails)  {		
 					
 		
 		authService.login(userCredentails) 

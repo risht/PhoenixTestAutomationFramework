@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.DataProvider;
 
 import com.api.request.models.CreateJobPayload;
@@ -14,14 +16,17 @@ import com.api.utils.ExcelReaderUtility2;
 import com.api.utils.FakerDataGenerator;
 import com.api.utils.JsonReaderUtility;
 import com.database.dao.CreateJobPayloadDataDao;
+import com.database.dao.MapJobProblemDao;
 import com.dataproviders.api.bean.CreateJobBean;
 import com.dataproviders.api.bean.UserBean;
 
 public class DataProviderUtils {
 
+	private static final Logger LOGGER = LogManager.getLogger(DataProviderUtils.class); 
+	
 	@DataProvider(name = "LoginAPIDataProvider", parallel = true)
 	public static Iterator<UserBean> loginAPIDataProvider() {
-
+		LOGGER.info("Loading Data from CSV file TestData/LoginCreds.csv");
 		return CSVReaderUtility.loadCSV("TestData/LoginCreds.csv", UserBean.class);
 
 	}
@@ -29,6 +34,8 @@ public class DataProviderUtils {
 	@DataProvider(name = "CreateJobAPIDataProvider", parallel = true)
 	public static Iterator<CreateJobPayload> createJobDataProvider() {
 
+		LOGGER.info("Loading Data from CSV file TestData/CreateJobData.csv");
+		
 		Iterator<CreateJobBean> createJobBeanIterator = CSVReaderUtility.loadCSV("TestData/CreateJobData.csv",
 				CreateJobBean.class);
 
@@ -55,6 +62,8 @@ public class DataProviderUtils {
 		
 	int fakerCountInt= Integer.parseInt(fakerCount);
 	
+	LOGGER.info("Generating fake create job data with faker count {} ",fakerCountInt);
+	
 	Iterator<CreateJobPayload>payloadIterator = FakerDataGenerator.generateFakeCreateJobData(fakerCountInt);
 		
 	return payloadIterator;
@@ -62,9 +71,12 @@ public class DataProviderUtils {
 		}
 	
 	@DataProvider(name = "LoginAPIJsonDataProvider", parallel = true)
-	public static Iterator<UserCredentials> LoginAPIJsonDataProvider() {
+	public static Iterator<UserBean> LoginAPIJsonDataProvider() {
 
-		return JsonReaderUtility.loadJSON("TestData/LogiAPITestData.json", UserCredentials[].class);
+		
+		LOGGER.info("Loading Data from Json file TestData/LogiAPITestData.json");
+		
+		return JsonReaderUtility.loadJSON("TestData/LogiAPITestData.json", UserBean[].class);
 
 	}
 	
@@ -73,6 +85,8 @@ public class DataProviderUtils {
 	@DataProvider(name = "CreateJobAPIJsonDataProvider", parallel = true)
 	public static Iterator<CreateJobPayload> CreateJobAPIJsonDataProvider() {
 
+		LOGGER.info("Loading Data from Json file TestData/LogiAPITestData.json");
+		
 		return JsonReaderUtility.loadJSON("TestData/CreateJobAPIData.json", CreateJobPayload[].class);
 
 	}
@@ -80,6 +94,9 @@ public class DataProviderUtils {
 	@DataProvider(name = "LoginAPIExcelDataProvider", parallel = true)
 	public static Iterator<UserBean> LoginAPIExcelDataProvider() {
 
+		LOGGER.info("Loading Data from file TestData/PhoenixTestData.xlsx and sheet is LoginTestData");
+		
+		
 		return ExcelReaderUtility2.loadTestData("TestData/PhoenixTestData.xlsx","LoginTestData", UserBean.class);
 
 	}
@@ -87,6 +104,9 @@ public class DataProviderUtils {
 	@DataProvider(name = "CreateJobAPIExcelDataProvider", parallel = true)
 	public static Iterator<CreateJobPayload> CreateJobAPIExcelDataProvider() {
 
+		
+		LOGGER.info("Loading Data from file TestData/PhoenixTestData.xlsx and sheet is CreateJobTestData");
+		
 		Iterator<CreateJobBean> iterator=ExcelReaderUtility2.loadTestData("TestData/PhoenixTestData.xlsx", "CreateJobTestData",CreateJobBean.class);
 
 		List<CreateJobPayload> payloadList = new ArrayList<CreateJobPayload>();
@@ -107,6 +127,8 @@ public class DataProviderUtils {
 	
 	@DataProvider(name = "CreateJobAPIDBDataProvider", parallel = true)
 	public static Iterator<CreateJobPayload> CreateJobAPIDBDataProvider() {
+		
+		LOGGER.info("Loading Data from Database for CreateJobPayload");
 		
 		List<CreateJobBean> beanList = CreateJobPayloadDataDao.getCreateJobPayloadData();
 		
