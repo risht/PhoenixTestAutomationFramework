@@ -5,6 +5,7 @@ import static com.api.utils.ConfigManager.getProperty;
 import org.hamcrest.Matchers;
 
 import com.api.constant.Roles;
+import com.api.filters.SensitiveDataFilter;
 import com.api.request.models.UserCredentials;
 
 import io.restassured.builder.RequestSpecBuilder;
@@ -42,6 +43,7 @@ public static RequestSpecification requestSpec(Object payload) {
 		.setContentType(ContentType.JSON)
 		.setAccept(ContentType.JSON)
 		.setBody(payload)
+		.addFilter(new SensitiveDataFilter())
 		.log(LogDetail.URI)
 		.log(LogDetail.METHOD)
 		.log(LogDetail.BODY)
