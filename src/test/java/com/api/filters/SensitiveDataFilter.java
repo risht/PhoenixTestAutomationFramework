@@ -21,7 +21,7 @@ public class SensitiveDataFilter implements Filter {
 	public Response filter(FilterableRequestSpecification requestSpec, FilterableResponseSpecification responseSpec,
 			FilterContext ctx) {
 
-		//System.out.println("=============Hello from the filter!!!==========");
+		
 		
 		LOGGER.info("**************REQUEST DETAILS ************");
 		
@@ -29,7 +29,7 @@ public class SensitiveDataFilter implements Filter {
 		
 		LOGGER.info("HTTP METHOD : {} ",requestSpec.getMethod());
 		
-		//Headers
+		
 		
 		redactHeader(requestSpec);
 		
@@ -72,7 +72,7 @@ public class SensitiveDataFilter implements Filter {
 		
 	}
 
-		//Create a method which is going to READACT/Hide the password from request payload
+		
 	
 		
 		public void redactPayload(FilterableRequestSpecification requestSpec)
@@ -81,13 +81,13 @@ public class SensitiveDataFilter implements Filter {
 		if(requestSpec.getBody()!=null)
 		{
 			
-		//ONly for POST,PUT AND DEL PAYLOAD  	
+		
 		String requestPayload = 	requestSpec.getBody().toString();
 		
-		//to hide the payload
+		
 		
 		requestPayload =	requestPayload.replaceAll("\"password\"\s*:\s*\"[^\"]+\"", "\"password\":\"[READACTED]\"");
-		//System.out.println(requestPayload);
+		
 		
 		LOGGER.info("REQUEST PAYLOAD : \n {} ",requestPayload);
 		

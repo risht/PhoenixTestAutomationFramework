@@ -2,6 +2,7 @@ package com.api.test;
 
 import org.hamcrest.Matchers;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.api.constant.Roles;
@@ -9,6 +10,8 @@ import com.api.request.models.Search;
 import com.api.services.JobService;
 import com.api.utils.SpecUtils;
 
+
+@Listeners(com.listeners.APITestListners.class)
 public class SearchAPITest {
 
 	private JobService jobService;
