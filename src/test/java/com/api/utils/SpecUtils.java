@@ -26,9 +26,7 @@ public class SpecUtils {
 		.setBaseUri(getProperty("BASE_URI"))
 		.setContentType(ContentType.JSON)
 		.setAccept(ContentType.JSON)
-		.log(LogDetail.URI)
-		.log(LogDetail.METHOD)
-		.log(LogDetail.BODY)
+		.addFilter(new SensitiveDataFilter())
 		.build();
 		return request;
 	
@@ -44,9 +42,6 @@ public static RequestSpecification requestSpec(Object payload) {
 		.setAccept(ContentType.JSON)
 		.setBody(payload)
 		.addFilter(new SensitiveDataFilter())
-		.log(LogDetail.URI)
-		.log(LogDetail.METHOD)
-		.log(LogDetail.HEADERS)
 		.build();
 		return requestSpecification;
 	
@@ -61,9 +56,7 @@ public static RequestSpecification requestSpec(Object payload) {
 		.setContentType(ContentType.JSON)
 		.setAccept(ContentType.JSON)
 		.addHeader("Authorization", AuthTokenProvider.getToken(role))
-		.log(LogDetail.URI)
-		.log(LogDetail.METHOD)
-		.log(LogDetail.BODY)
+		.addFilter(new SensitiveDataFilter())
 		.build();
 		return requestSpecification;
 		
@@ -79,9 +72,7 @@ public static RequestSpecification requestSpec(Object payload) {
 		.setAccept(ContentType.JSON)
 		.addHeader("Authorization", AuthTokenProvider.getToken(role))
 		.setBody(payload)
-		.log(LogDetail.URI)
-		.log(LogDetail.METHOD)
-		.log(LogDetail.BODY)
+		.addFilter(new SensitiveDataFilter())
 		.build();
 		return requestSpecification;
 		

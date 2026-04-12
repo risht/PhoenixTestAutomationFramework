@@ -1,14 +1,16 @@
 package com.api.test;
 
+import static com.api.constant.Roles.FD;
 import static com.api.utils.SpecUtils.responseSpec_OK;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.api.services.UserService;
 
-import static com.api.constant.Roles.FD;
+@Listeners(com.listeners.APITestListners.class)
 public class UserDetailsAPITest {
 	
 	private  UserService userService;
