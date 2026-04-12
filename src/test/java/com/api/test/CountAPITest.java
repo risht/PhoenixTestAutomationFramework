@@ -14,11 +14,14 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.api.services.DashBoardService;
 
 import static com.api.constant.Roles.FD;
+
+@Listeners(com.listeners.APITestListners.class)
 public class CountAPITest {
 	
 	

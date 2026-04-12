@@ -12,10 +12,13 @@ import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.notNullValue;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.api.services.MasterService;
 import static com.api.constant.Roles.FD;
+
+@Listeners(com.listeners.APITestListners.class)
 public class MasterAPITest {
 
 	private MasterService masterService;

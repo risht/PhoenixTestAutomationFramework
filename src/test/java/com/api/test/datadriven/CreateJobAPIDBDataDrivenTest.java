@@ -7,12 +7,13 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.api.constant.Roles;
 import com.api.request.models.CreateJobPayload;
 import com.api.services.JobService;
-
+@Listeners(com.listeners.APITestListners.class)
 public class CreateJobAPIDBDataDrivenTest { 
 	
 	

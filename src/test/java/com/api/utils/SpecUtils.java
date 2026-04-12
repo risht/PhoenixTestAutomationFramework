@@ -5,6 +5,7 @@ import static com.api.utils.ConfigManager.getProperty;
 import org.hamcrest.Matchers;
 
 import com.api.constant.Roles;
+import com.api.filters.SensitiveDataFilter;
 import com.api.request.models.UserCredentials;
 
 import io.restassured.builder.RequestSpecBuilder;
@@ -25,9 +26,7 @@ public class SpecUtils {
 		.setBaseUri(getProperty("BASE_URI"))
 		.setContentType(ContentType.JSON)
 		.setAccept(ContentType.JSON)
-		.log(LogDetail.URI)
-		.log(LogDetail.METHOD)
-		.log(LogDetail.BODY)
+		.addFilter(new SensitiveDataFilter())
 		.build();
 		return request;
 	
@@ -42,9 +41,7 @@ public static RequestSpecification requestSpec(Object payload) {
 		.setContentType(ContentType.JSON)
 		.setAccept(ContentType.JSON)
 		.setBody(payload)
-		.log(LogDetail.URI)
-		.log(LogDetail.METHOD)
-		.log(LogDetail.BODY)
+		.addFilter(new SensitiveDataFilter())
 		.build();
 		return requestSpecification;
 	
@@ -59,9 +56,7 @@ public static RequestSpecification requestSpec(Object payload) {
 		.setContentType(ContentType.JSON)
 		.setAccept(ContentType.JSON)
 		.addHeader("Authorization", AuthTokenProvider.getToken(role))
-		.log(LogDetail.URI)
-		.log(LogDetail.METHOD)
-		.log(LogDetail.BODY)
+		.addFilter(new SensitiveDataFilter())
 		.build();
 		return requestSpecification;
 		
@@ -77,9 +72,7 @@ public static RequestSpecification requestSpec(Object payload) {
 		.setAccept(ContentType.JSON)
 		.addHeader("Authorization", AuthTokenProvider.getToken(role))
 		.setBody(payload)
-		.log(LogDetail.URI)
-		.log(LogDetail.METHOD)
-		.log(LogDetail.BODY)
+		.addFilter(new SensitiveDataFilter())
 		.build();
 		return requestSpecification;
 		
@@ -94,7 +87,6 @@ public static RequestSpecification requestSpec(Object payload) {
 		.expectContentType(ContentType.JSON)
 		.expectStatusCode(200)
 		.expectResponseTime(Matchers.lessThan(1500L))
-		.log(LogDetail.ALL)
 		.build();
 	
 		return responseSpecification;
@@ -107,7 +99,6 @@ public static RequestSpecification requestSpec(Object payload) {
 		.expectContentType(ContentType.JSON)
 		.expectStatusCode(statusCode)
 		.expectResponseTime(Matchers.lessThan(1500L))
-		.log(LogDetail.ALL)
 		.build();
 	
 		return responseSpecification;
@@ -118,7 +109,6 @@ public static RequestSpecification requestSpec(Object payload) {
 		ResponseSpecification responseSpecification= new ResponseSpecBuilder()
 		.expectStatusCode(statusCode)
 		.expectResponseTime(Matchers.lessThan(1500L))
-		.log(LogDetail.ALL)
 		.build();
 	
 		return responseSpecification;
