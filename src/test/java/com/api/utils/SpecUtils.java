@@ -46,7 +46,7 @@ public static RequestSpecification requestSpec(Object payload) {
 		.addFilter(new SensitiveDataFilter())
 		.log(LogDetail.URI)
 		.log(LogDetail.METHOD)
-		.log(LogDetail.BODY)
+		.log(LogDetail.HEADERS)
 		.build();
 		return requestSpecification;
 	
@@ -96,7 +96,6 @@ public static RequestSpecification requestSpec(Object payload) {
 		.expectContentType(ContentType.JSON)
 		.expectStatusCode(200)
 		.expectResponseTime(Matchers.lessThan(1500L))
-		.log(LogDetail.ALL)
 		.build();
 	
 		return responseSpecification;
@@ -109,7 +108,6 @@ public static RequestSpecification requestSpec(Object payload) {
 		.expectContentType(ContentType.JSON)
 		.expectStatusCode(statusCode)
 		.expectResponseTime(Matchers.lessThan(1500L))
-		.log(LogDetail.ALL)
 		.build();
 	
 		return responseSpecification;
@@ -120,7 +118,6 @@ public static RequestSpecification requestSpec(Object payload) {
 		ResponseSpecification responseSpecification= new ResponseSpecBuilder()
 		.expectStatusCode(statusCode)
 		.expectResponseTime(Matchers.lessThan(1500L))
-		.log(LogDetail.ALL)
 		.build();
 	
 		return responseSpecification;
