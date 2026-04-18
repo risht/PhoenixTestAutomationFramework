@@ -10,7 +10,6 @@
 
 		<maven.compiler.target>16</maven.compiler.target>
 		<maven.compiler.source>16</maven.compiler.source>
-
 	</properties>
 	
 	<build>
@@ -32,8 +31,7 @@
             <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
           </suiteXmlFiles>
           <systemPropertyVariables>
-          <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-          
+          <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>          
           </systemPropertyVariables>
           
         </configuration>
