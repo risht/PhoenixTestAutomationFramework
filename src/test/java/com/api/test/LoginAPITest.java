@@ -10,11 +10,19 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import com.api.request.models.UserCredentials;
 import com.api.services.AuthService;
 import com.dataproviders.api.bean.UserBean;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
+
 @Listeners(com.listeners.APITestListners.class)
+@Epic("User Management")
+@Feature("Authentication")
 public class LoginAPITest {
 
 	private UserBean userCredentials ;
@@ -28,6 +36,9 @@ public class LoginAPITest {
 	}
 	
 	
+	@Story("Valid user should be able to login into the system")
+	@Description("Verify if the FD user is able to login via api")
+	@Severity(SeverityLevel.BLOCKER)
 	
 	@Test(description="Verifying if login api is working for FD user",groups = {"api","regression","smoke"})
 	public void loginAPITest() throws IOException {		
