@@ -1,0 +1,76 @@
+Phoenix Test Automation Framework
+This repository houses the Phoenix Test Automation Framework, a robust, hybrid automation solution built using Java and Rest Assured. It is engineered for high-performance API testing, featuring advanced data handling, secure secret management, and comprehensive reporting.
+
+🛠 Tech Stack & Key Libraries
+The framework leverages a modern ecosystem to ensure scalability and ease of use:
+
+Core Execution: Rest Assured for fluent API testing and validation.
+
+Test Engine: TestNG for managing test execution, parallelization, and assertions.
+
+Data Management:
+
+OpenCSV & Apache POI: Robust handling of .csv and .xlsx data sources.
+
+Poiji: Seamless mapping of Excel sheets to Java POJOs.
+
+Java Faker: Generation of dynamic, realistic test data.
+
+Database & Security:
+
+MySQL & HikariCP: High-performance database connectivity and connection pooling.
+
+Dotenv & Vault: Secure management of environment variables and sensitive credentials.
+
+Optimization: Lombok to reduce boilerplate code in POJO and model classes.
+
+Reporting & Logging:
+
+Allure Reports: Rich, interactive test execution reports.
+
+Log4j2: Asynchronous logging for detailed execution traces.
+
+🏗 Framework Architecture
+The framework is designed with a clear separation of concerns:
+
+Utilities: Contains the CSV reader, Excel parser (Poiji), and database connectors.
+
+POJOs: Data models representing API Request/Response bodies, simplified using Lombok.
+
+Listeners: Integrated TestNG and Allure listeners for automated failure snapshots and reporting.
+
+Constants: Centralized management of environment endpoints, database credentials, and browser configurations.
+
+🚀 Getting Started
+Prerequisites
+Java 16 or higher.
+
+Maven 3.6+.
+
+Execution
+To run the test suite via Maven, use the following command:
+
+Bash
+mvn clean test -DsuiteXmlFile=testng.xml
+Generating Reports
+The framework is pre-configured with the allure-maven plugin. After execution, generate and open the report using:
+
+Bash
+mvn allure:report
+mvn allure:serve
+📁 Project Structure
+Plaintext
+├── src/main/java
+│   ├── api.endpoints      # API Route constants
+│   ├── pojos              # Request/Response data models (Lombok)
+│   ├── utils              # CSV, Excel (Poiji), DB (HikariCP), & Dotenv utils
+│   └── report.config      # Allure & Log4j configurations
+├── src/test/java
+│   ├── tests              # API test scripts
+│   └── base               # Base test setup and teardown
+├── src/test/resources
+│   ├── testdata           # CSV and Excel data files
+│   └── .env               # Environment secrets (Git ignored)
+└── pom.xml                # Project dependencies and plugins
+🔒 Security & Environments
+The framework utilizes .env files and HashiCorp Vault integration. Ensure your local .env file is populated with the necessary keys before execution to prevent authentication failures.
